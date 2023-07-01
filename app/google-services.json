@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "118816649076",
+    "project_id": "expanded-dryad-308811",
+    "storage_bucket": "expanded-dryad-308811.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118816649076:android:0dbcb1ac033c09ecef0621",
+        "android_client_info": {
+          "package_name": "com.anuar.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118816649076-bdflm1oi4hlpvfnk80hcls0cvie80kgr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anuar.chatapp",
+            "certificate_hash": "37312671abaa5e305c362df731bf33afdfd39c36"
+          }
+        },
+        {
+          "client_id": "118816649076-uieeqkrjrrj7hlqrqcg5apvi5glto1j6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfwKnHESzUF1DLTfVyNPMQM2Op61PfAAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118816649076-uieeqkrjrrj7hlqrqcg5apvi5glto1j6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

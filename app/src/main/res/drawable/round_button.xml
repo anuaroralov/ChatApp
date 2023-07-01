@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/grey"/> <!-- Задайте цвет кнопки по своему вкусу -->
+    <corners android:radius="25dp"/> <!-- Задайте радиус углов, чтобы сделать кнопку круглой. Здесь используется значение 50dp, но вы можете настроить его по своему усмотрению -->
+</shape>

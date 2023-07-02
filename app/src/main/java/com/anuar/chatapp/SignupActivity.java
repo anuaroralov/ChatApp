@@ -29,6 +29,17 @@ public class SignupActivity extends AppCompatActivity {
     EditText nameEditText;
     Button button;
     TextView textView;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+//            reload();
+        }
+    }
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

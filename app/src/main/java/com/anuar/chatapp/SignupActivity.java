@@ -15,10 +15,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -29,6 +30,8 @@ public class SignupActivity extends AppCompatActivity {
     EditText nameEditText;
     Button button;
     TextView textView;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Override
     public void onStart() {
@@ -36,7 +39,7 @@ public class SignupActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-//            reload();
+            startActivity(new Intent(SignupActivity.this, ChatActivity.class));
         }
     }
 
@@ -53,6 +56,8 @@ public class SignupActivity extends AppCompatActivity {
         textView=findViewById(R.id.textView2);
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("users");
     }
 
     public void Login(View view) {
@@ -70,8 +75,10 @@ public class SignupActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            createUser(user);
 
-                            startActivity(new Intent(SignupActivity.this,MainActivity.class));
+                            Intent intent=new Intent(SignupActivity.this, ChatActivity.class);
+                            startActivity(intent);
 //                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -82,5 +89,10 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void createUser(FirebaseUser user) {
+        User user1=new User(nameEditText.getText().toString().trim(),user.getEmail(),user.getUid());
+        myRef.push().setValue(user1);
     }
 }

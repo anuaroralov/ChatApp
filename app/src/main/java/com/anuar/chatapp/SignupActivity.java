@@ -39,7 +39,7 @@ public class SignupActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            startActivity(new Intent(SignupActivity.this, ChatActivity.class));
+            startActivity(new Intent(SignupActivity.this, MainActivity.class));
         }
     }
 
@@ -77,7 +77,7 @@ public class SignupActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             createUser(user);
 
-                            Intent intent=new Intent(SignupActivity.this, ChatActivity.class);
+                            Intent intent=new Intent(SignupActivity.this, SignupActivity.class);
                             startActivity(intent);
 //                            updateUI(user);
                         } else {
@@ -92,7 +92,10 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void createUser(FirebaseUser user) {
-        User user1=new User(nameEditText.getText().toString().trim(),user.getEmail(),user.getUid());
+        User user1=new User();
+        user1.setName(nameEditText.getText().toString().trim());
+        user1.setEmail(user.getEmail());
+        user1.setId(user.getUid());
         myRef.push().setValue(user1);
     }
 }

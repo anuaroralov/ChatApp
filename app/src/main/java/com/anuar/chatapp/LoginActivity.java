@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            startActivity(new Intent(LoginActivity.this, ChatActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
     }
     @SuppressLint("MissingInflatedId")
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
-                            startActivity(new Intent(LoginActivity.this, ChatActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());

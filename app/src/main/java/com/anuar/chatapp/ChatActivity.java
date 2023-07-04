@@ -49,12 +49,15 @@ public class ChatActivity extends AppCompatActivity {
     DatabaseReference myRef;
     DatabaseReference myRef2;
     ChildEventListener childEventListener2;
-
+    String recipientUserId;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        mAuth=FirebaseAuth.getInstance();
 
         photoImageView = findViewById(R.id.photoImageView);
         sendImageButton = findViewById(R.id.sendImageButton);
@@ -71,6 +74,11 @@ public class ChatActivity extends AppCompatActivity {
         List<message> messageList = new ArrayList<>();
         adapter = new messageAdapter(this, R.layout.message_item, messageList);
         listView.setAdapter(adapter);
+
+        Intent intent=getIntent();
+        recipientUserId=intent.getStringExtra("recipientUserId");
+
+
 
         messageEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -97,7 +105,12 @@ public class ChatActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View view) {
-                message message = new message(messageEditText.getText().toString(), userName, null);
+                message message = new message();
+                message.setText(messageEditText.getText().toString());
+                message.setName(userName);
+                message.setImageUrl(null);
+                message.setSender(mAuth.getCurrentUser().getUid());
+                message.setReceiver(recipientUserId);
                 messageEditText.setText("");
 
                 myRef.push().setValue(message);
@@ -151,7 +164,10 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 message message=snapshot.getValue(message.class);
-                adapter.add(message);
+
+                if((message.getSender().equals(mAuth.getCurrentUser().getUid()) && message.getReceiver().equals(recipientUserId))||(message.getReceiver().equals(mAuth.getCurrentUser().getUid()) && message.getSender().equals(recipientUserId))){
+                    adapter.add(message);
+                }
             }
 
             @Override
@@ -202,7 +218,7 @@ public class ChatActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        message message=new message(null,userName,downloadUri.toString());
+                        message message=new message(null,userName,downloadUri.toString(),mAuth.getCurrentUser().getUid(),recipientUserId);
                         myRef.push().setValue(message);
                     } else {
 

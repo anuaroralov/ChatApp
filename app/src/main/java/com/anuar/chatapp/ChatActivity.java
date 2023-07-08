@@ -165,7 +165,12 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 message message=snapshot.getValue(message.class);
 
-                if((message.getSender().equals(mAuth.getCurrentUser().getUid()) && message.getReceiver().equals(recipientUserId))||(message.getReceiver().equals(mAuth.getCurrentUser().getUid()) && message.getSender().equals(recipientUserId))){
+                if((message.getSender().equals(mAuth.getCurrentUser().getUid()) && message.getReceiver().equals(recipientUserId))){
+                    message.setMine(true);
+                    adapter.add(message);
+                }
+                else if((message.getReceiver().equals(mAuth.getCurrentUser().getUid()) && message.getSender().equals(recipientUserId))){
+                    message.setMine(false);
                     adapter.add(message);
                 }
             }
@@ -218,7 +223,12 @@ public class ChatActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        message message=new message(null,userName,downloadUri.toString(),mAuth.getCurrentUser().getUid(),recipientUserId);
+                        message message=new message();
+                        message.setText(null);
+                        message.setName(userName);
+                        message.setImageUrl(downloadUri.toString());
+                        message.setSender(mAuth.getCurrentUser().getUid());
+                        message.setReceiver(recipientUserId);
                         myRef.push().setValue(message);
                     } else {
 

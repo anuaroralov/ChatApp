@@ -1,5 +1,6 @@
 package com.anuar.chatapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +39,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView userRecyclerView;
     private UserAdapter userAdapter;
     private RecyclerView.LayoutManager userLayoutManager;
+    NavigationView navigationView;
+    View headerView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -51,12 +56,15 @@ public class HomeFragment extends Fragment {
         userArrayList = new ArrayList<>();
 
         attachUserDatabaseReferenceListener();
+
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         userRecyclerView = rootView.findViewById(R.id.userListRecyclerView);
         userRecyclerView.setHasFixedSize(true);
         userRecyclerView.addItemDecoration(new DividerItemDecoration(
